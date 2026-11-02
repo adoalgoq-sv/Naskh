@@ -9,6 +9,9 @@ jobs:
       - uses: actions/checkout@v4
       - run: unzip -q Naskh*.zip
       - run: sed -i 's/2024.09.00/2024.06.00/' Naskh/app/build.gradle.kts
+      - run: |
+          echo "android.useAndroidX=true" >> Naskh/gradle.properties
+          echo "org.gradle.jvmargs=-Xmx3g" >> Naskh/gradle.properties
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
