@@ -8,8 +8,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: unzip -q Naskh*.zip
-      - run: sed -i 's/2024.09.00/2024.06.00/' Naskh/app/build.gradle.kts
       - run: |
+          sed -i 's/2024.09.00/2024.06.00/' Naskh/app/build.gradle.kts
+          sed -i 's/cz.adaptive:/cz.adaptech.tesseract4android:/' Naskh/app/build.gradle.kts
+          sed -i 's|mavenCentral() }|mavenCentral(); maven { url = uri("https://jitpack.io") } }|' Naskh/settings.gradle.kts
+          sed -i 's/Builder(null, /Builder(android.R.drawable.ic_menu_crop, /' Naskh/app/src/main/java/com/naskh/app/CaptureService.kt
+          sed -i 's|startForeground(1, notification(), android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION)|if (android.os.Build.VERSION.SDK_INT >= 29) startForeground(1, notification(), android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION) else startForeground(1, notification())|' Naskh/app/src/main/java/com/naskh/app/CaptureService.kt
           echo "android.useAndroidX=true" >> Naskh/gradle.properties
           echo "org.gradle.jvmargs=-Xmx3g" >> Naskh/gradle.properties
       - uses: actions/setup-java@v4
