@@ -8,6 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: unzip -q Naskh*.zip
+      - run: sed -i 's/2024.09.00/2024.06.00/' Naskh/app/build.gradle.kts
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
